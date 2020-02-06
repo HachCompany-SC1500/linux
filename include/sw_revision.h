@@ -1,0 +1,1 @@
+#define LINUX_SW_REVISION "d479e0a9a75df44b46f33b5b15650d71edf4d5b8"

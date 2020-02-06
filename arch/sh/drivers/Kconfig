@@ -1,0 +1,40 @@
+source "arch/sh/drivers/dma/Kconfig"
+source "arch/sh/cchips/Kconfig"
+
+menu "Additional SuperH Device Drivers"
+
+config HEARTBEAT
+	bool "Heartbeat LED"
+	help
+	  Use the power-on LED on your machine as a load meter.  The exact
+	  behavior is platform-dependent, but normally the flash frequency is
+	  a hyperbolic function of the 5-minute load average.
+
+config PUSH_SWITCH
+	tristate "Push switch support"
+	help
+	  This enables support for the push switch framework, a simple
+	  framework that allows for sysfs driven switch status reporting.
+
+config SH_PWM_TPU
+	bool "PWM with Timer Pulse Unit (TPU) Driver"
+	depends on CPU_SUBTYPE_SH7723
+	select HAVE_PWM
+        help
+          Provides a PWM driver using the Timer Pulse Unit of the SH7723
+
+config GPIO_PRINT_ENUM
+        bool "Provides enum names for gpios in debugfs/gpio_print_enum"
+	depends on ARCH_REQUIRE_GPIOLIB && DEBUG_FS && CPU_SUBTYPE_SH7723
+        help
+          For using /sys/class/gpio/export in userspace, the GPIO numbers needs to be known. But in the hardware reference manual, only names (e.g. PTA7) are used. When enabled, the enum names from arch/sh/kernel/cpu/sh4a/pinmux* are reported. These enum contain the pin number used in hardware reference manual.
+
+config I2C_GPIO_SH
+	tristate "GPIO-based bitbanging I2C improved for SH"
+	depends on CPU_SUBTYPE_SH7723 && GENERIC_GPIO
+	select I2C_ALGOBIT
+	help
+          This is a performance improved bitbanging driver to reduce CPU
+	  load and improve I2C transfer rate.
+
+endmenu

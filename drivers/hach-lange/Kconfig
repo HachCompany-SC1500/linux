@@ -1,0 +1,46 @@
+#
+# hach-lange driver configuration
+#
+
+menuconfig HL_DRIVERS
+	boolean "Hach Lange drivers support"
+	---help---
+	Hach-Lange specific linux drivers are supported here.
+
+if HL_DRIVERS
+config RL78_SUPPORT
+	tristate "RL78 support setup"
+	default y
+	help
+      This control enables/disables the request handler for the
+      connected RL78 sub processors.
+      Each RL78 handles up to 3 probes which are connected with the
+      sub processor via Modbus. Each RL78 uses a seperate request line
+      and a common interrupt (IRQ2) to notify the SH4 master of events.
+
+      If you want RL78 support, you should say Y here.
+
+      This RL78 support can also be built as a module.
+
+config HLIRQ_SUPPORT
+	boolean "HL-IRQ support setup"
+	default n
+	help
+	  Enable HL IRQ interrupt support.
+	  This control enables/disables support for the HL-IRQ functionality.
+	  It is not allowed to enable both the RL78_SUPPORT and HLIRQ_SUPPORT
+	  at the same time since they share IRQ2.
+
+config FUSIONBOARD_SUPPORT
+	boolean "Hach-Lange Fusion board"
+	default y
+	help
+	  This control enables/disables support for the following hardware
+	  extras on the Fusion Board:
+	  1.) Check if left button was pushed during booting of linux.
+	  2.) Set and query status for both fans
+	  3.) Set and query LED status (red/green/off).
+	  All features are accessible from the /sys directory tree.
+	  If you want Hach-Lange Fusion board support, you should say Y here.
+
+endif

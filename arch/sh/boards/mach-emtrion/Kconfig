@@ -1,0 +1,49 @@
+config BUSY_LEDS
+	bool "Busy LEDs"
+	depends on SH_EMTRION_FEATURES
+        default y
+	help
+                Enabling this will show the kernel busy status on the
+                two coloured leds off the core module. Red is set when
+                interrupt are serviced and green is lit when processor
+                is not idle
+
+config DIRECTFB_CMDLINE
+	bool "Provide directfb= command line option for hardware acceleration"
+	depends on SH_EMTRION_FEATURES
+        default y
+	help
+                Setting the kernel command line option directfb=hw will
+                reserve the last 8MB of RAM for directfb hardware acceleration,
+                similar to mem=120M.
+                Userspace might use this command line option for further configuration.
+
+config SH_EARLY_SD_FIRMWARE
+       bool "Check for SD firmware provided by bootloader"
+       depends on MMC_SH_SDHI
+       default y
+       help
+                The bootloader can provide the SD firmware image so the kernel can initialize the SD driver when booting. Otherwise the SD driver needs to be compiled as a module and the firmware loaded by the firmware subsystem.
+
+config SH_BOOTLOGO
+       bool "Keep the bootlogo provided by bootloader"
+       depends on SH_EMTRION_FEATURES
+       default y
+       help
+                When the bootloader has already configured the display controller, linux will keep it instead of displaying the pinguin. Can be disabled with bootlogo=off and enabled with bootlogo="keep". The framebuffer console will be disabled.
+
+config SH_BOOTLOGO_OVERLAY_WITH_LINUX
+       bool "Display an overlay linux/pinguin logo on the bootlogo"
+       depends on SH_BOOTLOGO
+       default y
+       help
+                The default linux logo is displayed on the bootlogo of the bootloader. This might be useful only on starterkits and demo boards.
+
+config FAN
+	bool "permanent Fan"
+	depends on SH_EMTRION_FEATURES
+        default y
+	help
+                Enabling this will permanently enable the FPM fan. 
+
+source "drivers/misc/emtrion/Kconfig"

@@ -1,0 +1,60 @@
+config EM_COMMON
+	boolean
+	default n
+
+config EM_DEVICE_SETUP
+	boolean
+	default n
+
+config EM_DIMM_MODULE
+	boolean
+	default n
+
+config EM_BASEBOARD
+	bool "Baseboard support"
+	default n
+        help
+          An emtrion core/cpu module can be installed on a range of baseboards. With this option enabled, the kernel can detect, configured and load drivers depending on the baseboard the core module is installed.
+
+config EM_BASEBOARD_DIMMECOBASE
+	bool "Support DIMM-Eco-Base"
+	depends on SH_HICO7723 && EM_BASEBOARD && EM_DIMM_MODULE
+        default n
+	help
+	  Enable this if the core module will be used on a DIMM-Eco-Base/HiCO.DIMM-Eco-Base
+
+config EM_BASEBOARD_DIMMBASE
+	bool "Support DIMM-Base"
+	depends on SH_HICO7723 && EM_BASEBOARD && EM_DIMM_MODULE
+        default n
+	help
+	  Enable this if the core module will be used on a DIMM-Base/HiCO.DIMMBase
+
+config EM_BASEBOARD_PELLENC
+	bool "Support Pellenc"
+	depends on SH_HICO7723 && EM_BASEBOARD && EM_DIMM_MODULE
+        default n
+	help
+	  Enable this if the core module will be used on a Pellenc
+
+config EM_BASEBOARD_HACHLANGE
+	bool "Support HachLange"
+	depends on SH_HICO7723 && EM_BASEBOARD && EM_DIMM_MODULE
+        default n
+	help
+	  Enable this if the core module will be used on a Hach-Lange base board
+
+config EM_BASEBOARD_DIMMBASE_LOTHRON
+	bool "Support DIMM-Base Lothron"
+	depends on SH_HICO7724 && EM_BASEBOARD && EM_DIMM_MODULE
+        default n
+	help
+	  Enable this if the core module will be used on a DIMM-Base Lothron
+
+config EM_FIRMWARE_BY_BOOTLOADER
+	bool "Firmware images are given by bootloader"
+	depends on FIRMWARE_IN_KERNEL
+	default n
+	help
+	  When it's not possible to link the firmware to the kernel due to licensing, but the use
+	  of initrd/initramfs is too complicated/too slow, then the bootloader can give the firmware to linux.

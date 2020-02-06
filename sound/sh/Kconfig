@@ -1,0 +1,76 @@
+# ALSA SH drivers
+
+menuconfig SND_SUPERH
+	bool "SUPERH sound devices"
+	depends on SUPERH
+	default y
+	help
+	  Support for sound devices specific to SUPERH architectures.
+	  Drivers that are implemented on ASoC can be found in
+	  "ALSA for SoC audio support" section.
+
+if SND_SUPERH
+
+config SND_AICA
+	tristate "Dreamcast Yamaha AICA sound"
+	depends on SH_DREAMCAST
+	select SND_PCM
+	select G2_DMA
+	help
+	  ALSA Sound driver for the SEGA Dreamcast console.
+
+config SND_SH_DAC_AUDIO
+	tristate "SuperH DAC audio support"
+	depends on SND
+	depends on CPU_SH3 && HIGH_RES_TIMERS
+	select SND_PCM
+	help
+	  Say Y here to include support for the on-chip DAC.
+
+config SH7343_SIU
+	tristate "Renesas SH7343 SIU"
+	depends on CPU_SUBTYPE_SH7722 || CPU_SUBTYPE_SH7723
+	---help---
+	  Say M if you want to use the Sound Interface Unit peripheral
+	  on the SH-Mobile processor.
+	  You will get a module called siu_sh7343.
+
+	  If you do not want to use the SH-Mobile on board SIU, you can 
+	  safely say N here.
+
+choice
+	prompt "Codec"
+	depends on SH7343_SIU
+	default WM8978_CODEC
+	help
+	  This option determines the codec connected to the SIU or SIOF module 
+	  of the SuperH processor.
+
+config WM8750_CODEC
+	bool "WM8750 codec (SIU)"
+	help
+	  If you do not have an WM8750 codec connected to the SH7723 SIU
+	  you can safely say N here.
+	  
+config WM8978_CODEC
+	bool "WM8978 codec"
+	help
+	  If you do not have an WM8978 codec connected to the SIU or the SIOF
+	  you can safely say N here.
+
+config AK4537_CODEC
+	bool "AK4537 codec (solution engine)"
+	help
+	  If you do not have an AK4537 codec connected to the SIU or the SIOF
+	  you can safely say N here.
+
+config TLV320AIC_CODEC
+	bool "TLV320AIC codec (SIU)"
+	help
+	  If you do not have an TLV320AIC codec connected to the SH7723 SIU
+	  you can safely say N here.
+
+endchoice
+
+endif	# SND_SUPERH
+
